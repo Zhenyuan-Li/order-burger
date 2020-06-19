@@ -34,7 +34,7 @@ class ContactData extends Component {
       deliveryMethod: 'fastest',
     };
     axios
-      .post('/order.json', order)
+      .post('/orders.json', order)
       .then((response) => {
         this.setState({ loading: false });
         this.props.history.push('/');
