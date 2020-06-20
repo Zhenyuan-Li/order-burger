@@ -113,7 +113,7 @@ class ContactData extends Component {
     event.preventDefault();
     this.setState({ loading: true });
     const formData = {};
-    for (let formElementIdentifier in this.state.orderForm) {
+    for (const formElementIdentifier in this.state.orderForm) {
       formData[formElementIdentifier] = this.state.orderForm[
         formElementIdentifier
       ].value;
@@ -150,7 +150,7 @@ class ContactData extends Component {
     updatedOrderForm[inputIdentifier] = updatedFormElement;
 
     let formIsValid = true;
-    for (let inputIdentifier in updatedOrderForm) {
+    for (const inputIdentifier in updatedOrderForm) {
       formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
     }
 
@@ -159,7 +159,7 @@ class ContactData extends Component {
 
   render() {
     const formElementsArray = [];
-    for (let key in this.state.orderForm) {
+    for (const key in this.state.orderForm) {
       formElementsArray.push({
         id: key,
         config: this.state.orderForm[key],

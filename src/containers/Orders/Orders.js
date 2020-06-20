@@ -15,7 +15,7 @@ class Orders extends Component {
       .get('/orders.json')
       .then((res) => {
         const fetchOrders = [];
-        for (let key in res.data) {
+        for (const key in res.data) {
           fetchOrders.push({
             ...res.data[key],
             id: key,

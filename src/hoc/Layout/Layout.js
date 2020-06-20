@@ -1,24 +1,27 @@
 import React, { Component } from 'react';
 
-import Aux from '../Aux/Aux'
+import Aux from '../Aux/Aux';
 import classes from './Layout.module.css';
-import Toolbar from '../../components/Navigation/Toolbar.js/Toolbar'
-import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer'
+import Toolbar from '../../components/Navigation/Toolbar.js/Toolbar';
+import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 
 class Layout extends Component {
-  state = {
-    showSideDrawer: false
+  constructor(props) {
+    super(props);
+    this.state = {
+      showSideDrawer: false,
+    };
   }
 
   sideDrawerClosedHandler = () => {
     this.setState({ showSideDrawer: false });
-  }
+  };
 
   sideDrawerToggleHandler = () => {
     this.setState((prev) => {
-      return { showSideDrawer: !this.state.showSideDrawer };
+      return { showSideDrawer: !prev.showSideDrawer };
     });
-  }
+  };
 
   render() {
     return (
@@ -26,12 +29,11 @@ class Layout extends Component {
         <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler} />
         <SideDrawer
           open={this.state.showSideDrawer}
-          closed={this.sideDrawerClosedHandler} />
-        <main className={classes.Content}>
-          {this.props.children}
-        </main>
+          closed={this.sideDrawerClosedHandler}
+        />
+        <main className={classes.Content}>{this.props.children}</main>
       </Aux>
-    )
+    );
   }
 }
 

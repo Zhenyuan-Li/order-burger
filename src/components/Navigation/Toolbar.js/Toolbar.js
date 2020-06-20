@@ -1,9 +1,9 @@
 import React from 'react';
 
-import classes from './Toolbar.module.css'
-import Logo from '../../Logo/Logo'
+import classes from './Toolbar.module.css';
+import Logo from '../../Logo/Logo';
 import Navigations from '../NavigationItems/NavigationItems';
-import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle'
+import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle';
 
 const toolBar = (props) => (
   <header className={classes.Toolbar}>
@@ -14,7 +14,6 @@ const toolBar = (props) => (
     <nav className={classes.DesktopOnly}>
       <Navigations />
     </nav>
-
   </header>
 );
 

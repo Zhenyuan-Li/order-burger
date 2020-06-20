@@ -18,11 +18,14 @@
     "ecmaVersion": 11,
     "sourceType": "module"
   },
+  "parser": "babel-eslint",
   "plugins": ["react", "jest", "prettier"],
   "rules": {
     "prettier/prettier": "warn",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "no-console": "off",
-    "react/jsx-one-expression-per-line": "off"
+    "react/jsx-one-expression-per-line": "off",
+    "react/prop-types": "off",
+    "react/destructuring-assignment": [0, "always"]
   }
 }
