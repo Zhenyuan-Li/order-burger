@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/display-name */
 import React, { Component } from 'react';
 
 import Modal from '../../components/UI/Modal/Modal';

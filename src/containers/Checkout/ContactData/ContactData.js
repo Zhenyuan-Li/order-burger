@@ -125,11 +125,11 @@ class ContactData extends Component {
     };
     axios
       .post('/orders.json', order)
-      .then((response) => {
+      .then(() => {
         this.setState({ loading: false });
         this.props.history.push('/');
       })
-      .catch((error) => {
+      .catch(() => {
         this.setState({ loading: false });
       });
   };
