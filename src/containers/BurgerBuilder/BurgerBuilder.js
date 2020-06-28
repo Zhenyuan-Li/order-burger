@@ -5,8 +5,8 @@ import Aux from '../../hoc/Aux/Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
-import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/WithErrorHandler/withErrorHandler';
 import * as burgerBuilderActions from '../../store/actions/index';
@@ -14,24 +14,11 @@ import * as burgerBuilderActions from '../../store/actions/index';
 class BurgerBuilder extends Component {
   state = {
     purchasing: false,
-    loading: false,
-    error: false,
   };
 
   componentDidMount() {
-    // axios
-    //   .get('https://react-burger-94d69.firebaseio.com/ingredients.json')
-    //   .then((response) => {
-    //     this.setState({ ingredients: response.data });
-    //   })
-    //   .catch(() => {
-    //     this.setState({ error: true });
-    //   });
+    this.props.onInitIngredients();
   }
-
-  purchaseHandler = () => {
-    this.setState({ purchasing: true });
-  };
 
   updatedPurchaseState = (ingredients) => {
     const sum = Object.keys(ingredients)
@@ -42,6 +29,10 @@ class BurgerBuilder extends Component {
         return sum + el;
       }, 0);
     return sum > 0;
+  };
+
+  purchaseHandler = () => {
+    this.setState({ purchasing: true });
   };
 
   purchaseCancelHandler = () => {
@@ -61,7 +52,7 @@ class BurgerBuilder extends Component {
     }
     let orderSummary = null;
 
-    let burger = this.state.error ? (
+    let burger = this.props.error ? (
       <p>Ingredients can&apos;t be loaded!</p>
     ) : (
       <Spinner />
@@ -89,9 +80,6 @@ class BurgerBuilder extends Component {
         />
       );
     }
-    if (this.state.loading) {
-      orderSummary = <Spinner />;
-    }
 
     return (
       <Aux>
@@ -111,6 +99,7 @@ const mapStateToProps = (state) => {
   return {
     ings: state.ingredients,
     price: state.totalPrice,
+    error: state.error,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -119,6 +108,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(burgerBuilderActions.addIngredient(ingName)),
     onIngredientRemoved: (ingName) =>
       dispatch(burgerBuilderActions.removeIngredient(ingName)),
+    onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients()),
   };
 };
 
