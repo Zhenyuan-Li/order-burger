@@ -5,6 +5,7 @@ const initialState = {
   ingredients: null,
   totalPrice: 4,
   error: false,
+  building: false,
 };
 
 const addIngredient = (state, action) => {
@@ -31,6 +32,7 @@ const setIngredients = (state, action) => {
     },
     totalPrice: 4,
     error: false,
+    building: false,
   });
 };
 
