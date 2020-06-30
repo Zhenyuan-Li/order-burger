@@ -2,7 +2,7 @@ import React from 'react';
 
 import classes from './Toolbar.module.css';
 import Logo from '../../Logo/Logo';
-import Navigations from '../NavigationItems/NavigationItems';
+import NavigationItems from '../NavigationItems/NavigationItems';
 import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle';
 
 const toolBar = (props) => (
@@ -12,7 +12,7 @@ const toolBar = (props) => (
       <Logo />
     </div>
     <nav className={classes.DesktopOnly}>
-      <Navigations />
+      <NavigationItems isAuthenticated={props.isAuth} />
     </nav>
   </header>
 );

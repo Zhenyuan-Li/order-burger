@@ -23,6 +23,7 @@ export const updateBurgerState = (state, ingredient, mode) => {
   const updatedState = {
     ingredients: updatedIngredients,
     totalPrice: state.totalPrice + INGREDIENT_PRICES[ingredient],
+    building: true,
   };
   return updatedState;
 };
