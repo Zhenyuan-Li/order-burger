@@ -25,16 +25,21 @@ const authFail = (error) => {
 };
 
 const checkAuthTimeout = (expirationTime) => {
-  return (dispatch) => {
-    setTimeout(() => {
-      dispatch(logout());
-    }, expirationTime * 1000);
+  return {
+    type: actionTypes.AUTH_CHECK_TIMEOUT,
+    expirationTime,
   };
 };
 
 const logout = () => {
   return {
     type: actionTypes.AUTH_INITIATE_LOGOUT,
+  };
+};
+
+const logoutSucceed = () => {
+  return {
+    type: actionTypes.AUTH_LOGOUT,
   };
 };
 
@@ -96,4 +101,4 @@ const authCheckState = () => {
   };
 };
 
-export { auth, logout, setAuthRedirectPath, authCheckState };
+export { auth, logout, logoutSucceed, setAuthRedirectPath, authCheckState };
