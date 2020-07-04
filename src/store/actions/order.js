@@ -1,12 +1,12 @@
 import * as actionTypes from './actionTypes';
 
-const purchaseBurgerStart = () => {
+export const purchaseBurgerStart = () => {
   return {
     type: actionTypes.PURCHASE_BURGER_START,
   };
 };
 
-const purchaseBurgerSuccess = (id, orderData) => {
+export const purchaseBurgerSuccess = (id, orderData) => {
   return {
     type: actionTypes.PURCHASE_BURGER_SUCCESS,
     orderId: id,
@@ -14,14 +14,14 @@ const purchaseBurgerSuccess = (id, orderData) => {
   };
 };
 
-const purchaseBurgerFail = (error) => {
+export const purchaseBurgerFail = (error) => {
   return {
     type: actionTypes.PURCHASE_BURGER_FAIL,
     error,
   };
 };
 
-const purchaseBurger = (orderData, token) => {
+export const purchaseBurger = (orderData, token) => {
   return {
     type: actionTypes.PURCHASE_BURGER,
     token,
@@ -29,48 +29,36 @@ const purchaseBurger = (orderData, token) => {
   };
 };
 
-const purchaseInit = () => {
+export const purchaseInit = () => {
   return {
     type: actionTypes.PURCHASE_INIT,
   };
 };
 
-const fetchOrdersStart = () => {
+export const fetchOrdersStart = () => {
   return {
     type: actionTypes.FETCH_ORDERS_START,
   };
 };
 
-const fetchOrdersSuccess = (orders) => {
+export const fetchOrdersSuccess = (orders) => {
   return {
     type: actionTypes.FETCH_ORDERS_SUCCESS,
     orders: orders,
   };
 };
 
-const fetchOrdersFail = (error) => {
+export const fetchOrdersFail = (error) => {
   return {
     type: actionTypes.FETCH_ORDERS_FAIL,
     error,
   };
 };
 
-const fetchOrders = (token, userId) => {
+export const fetchOrders = (token, userId) => {
   return {
     type: actionTypes.FETCH_ORDERS,
     token,
     userId,
   };
-};
-
-export {
-  purchaseBurgerStart,
-  purchaseBurger,
-  purchaseBurgerSuccess,
-  purchaseBurgerFail,
-  purchaseInit,
-  fetchOrders,
-  fetchOrdersStart,
-  fetchOrdersSuccess,
-  fetchOrdersFail,
 };

@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
-import thunk from 'redux-thunk';
 import createSagaMiddleWare from 'redux-saga';
 
 import './index.css';
@@ -30,7 +29,7 @@ const sagaMiddleWare = createSagaMiddleWare();
 
 const store = createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(thunk, sagaMiddleWare))
+  composeEnhancers(applyMiddleware(sagaMiddleWare))
 );
 
 sagaMiddleWare.run(watchAuth);
