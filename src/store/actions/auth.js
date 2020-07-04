@@ -1,6 +1,3 @@
-/* eslint-disable no-undef */
-import axios from 'axios';
-
 import * as actionTypes from './actionTypes';
 
 const authStart = () => {
@@ -44,32 +41,11 @@ const logoutSucceed = () => {
 };
 
 const auth = (email, password, isSignup) => {
-  return (dispatch) => {
-    dispatch(authStart());
-    let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_AUTH_KEY}`;
-    if (!isSignup) {
-      url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_AUTH_KEY}`;
-    }
-    const authData = {
-      email,
-      password,
-      returnSecureToken: true,
-    };
-    axios
-      .post(url, authData)
-      .then((response) => {
-        const expirationDate = new Date(
-          new Date().getTime() + response.data.expiresIn * 1000
-        );
-        localStorage.setItem('token', response.data.idToken);
-        localStorage.setItem('expirationDate', expirationDate);
-        localStorage.setItem('userId', response.data.localId);
-        dispatch(authSuccess(response.data.idToken, response.data.localId));
-        dispatch(checkAuthTimeout(response.data.expiresIn));
-      })
-      .catch((error) => {
-        dispatch(authFail(error.response.data.error));
-      });
+  return {
+    type: actionTypes.AUTH_USER,
+    email,
+    password,
+    isSignup,
   };
 };
 
@@ -101,4 +77,14 @@ const authCheckState = () => {
   };
 };
 
-export { auth, logout, logoutSucceed, setAuthRedirectPath, authCheckState };
+export {
+  auth,
+  authSuccess,
+  authFail,
+  authStart,
+  checkAuthTimeout,
+  logout,
+  logoutSucceed,
+  setAuthRedirectPath,
+  authCheckState,
+};
