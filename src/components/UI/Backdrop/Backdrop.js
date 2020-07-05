@@ -1,12 +1,12 @@
 import React from 'react';
 
-import classes from './Backdrop.module.css';
+import './Backdrop.css';
 
 const backdrop = (props) => {
   const { show, clicked } = props;
   return show ? (
     <div
-      className={classes.Backdrop}
+      className="backdrop"
       onClick={clicked}
       onKeyPress={clicked}
       role="presentation"

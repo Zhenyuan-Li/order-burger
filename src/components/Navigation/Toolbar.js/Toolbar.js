@@ -1,17 +1,17 @@
 import React from 'react';
 
-import classes from './Toolbar.module.css';
+import './Toolbar.css';
 import Logo from '../../Logo/Logo';
 import NavigationItems from '../NavigationItems/NavigationItems';
 import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle';
 
 const toolBar = (props) => (
-  <header className={classes.Toolbar}>
+  <header className="toolbar">
     <DrawerToggle clicked={props.drawerToggleClicked} />
-    <div className={classes.Logo}>
+    <div className="toolbar-logo">
       <Logo />
     </div>
-    <nav className={classes.DesktopOnly}>
+    <nav className="desktopOnly">
       <NavigationItems isAuthenticated={props.isAuth} />
     </nav>
   </header>
