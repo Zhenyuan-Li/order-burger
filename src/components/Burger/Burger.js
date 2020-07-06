@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import classes from './Burger.module.css';
+import './Burger.css';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
 const burger = (props) => {
@@ -19,7 +19,7 @@ const burger = (props) => {
     transformedIngredient = <p>Please start adding ingredients</p>;
   }
   return (
-    <div className={classes.Burger}>
+    <div className="burger">
       <BurgerIngredient type="bread-top" />
       {transformedIngredient}
       <BurgerIngredient type="bread-bottom" />
