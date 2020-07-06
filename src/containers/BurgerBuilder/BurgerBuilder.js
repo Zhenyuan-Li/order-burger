@@ -1,30 +1,20 @@
 import React, { useState, useEffect, Fragment, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import axios from '../../axios-orders';
+import withErrorHandler from '../../hoc/WithErrorHandler/withErrorHandler';
 import Burger from '../../components/Burger/Burger';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
-import axios from '../../axios-orders';
-import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import withErrorHandler from '../../hoc/WithErrorHandler/withErrorHandler';
 import * as actions from '../../store/actions/index';
 
 const BurgerBuilder = ({ history }) => {
-  const [purchasing, setPurchasing] = useState(false);
-
-  const ings = useSelector((state) => {
-    return state.burgerBuilder.ingredients;
-  });
-  const price = useSelector((state) => {
-    return state.burgerBuilder.totalPrice;
-  });
-  const error = useSelector((state) => {
-    return state.burgerBuilder.error;
-  });
-  const isAuthenticated = useSelector((state) => {
-    return state.auth.token !== null;
-  });
+  const ingredients = useSelector((state) => state.burgerBuilder.ingredients);
+  const totalPrice = useSelector((state) => state.burgerBuilder.totalPrice);
+  const error = useSelector((state) => state.burgerBuilder.error);
+  const isAuthenticated = useSelector((state) => state.auth.token !== null);
 
   const dispatch = useDispatch();
   const onIngredientAdded = (ingName) =>
@@ -38,6 +28,8 @@ const BurgerBuilder = ({ history }) => {
   const onInitPurchase = () => dispatch(actions.purchaseInit());
   const onSetAuthRedirectPath = (path) =>
     dispatch(actions.setAuthRedirectPath(path));
+
+  const [purchasing, setPurchasing] = useState(false);
 
   useEffect(() => {
     onInitIngredients();
@@ -73,7 +65,7 @@ const BurgerBuilder = ({ history }) => {
   };
 
   const disabledInfo = {
-    ...ings,
+    ...ingredients,
   };
   for (const key in disabledInfo) {
     disabledInfo[key] = disabledInfo[key] <= 0;
@@ -81,16 +73,16 @@ const BurgerBuilder = ({ history }) => {
   let orderSummary = null;
 
   let burger = error ? <p>Ingredients can&apos;t be loaded!</p> : <Spinner />;
-  if (ings) {
+  if (ingredients) {
     burger = (
       <Fragment>
-        <Burger ingredients={ings} />
+        <Burger ingredients={ingredients} />
         <BuildControls
           ingredientAdded={onIngredientAdded}
           ingredientRemoved={onIngredientRemoved}
-          purchaseable={updatedPurchaseState(ings)}
+          purchaseable={updatedPurchaseState(ingredients)}
           disabled={disabledInfo}
-          price={price}
+          price={totalPrice}
           ordered={purchaseHandler}
           isAuth={isAuthenticated}
         />
@@ -98,8 +90,8 @@ const BurgerBuilder = ({ history }) => {
     );
     orderSummary = (
       <OrderSummary
-        ingredients={ings}
-        price={price}
+        ingredients={ingredients}
+        price={totalPrice}
         purchaseCancelled={purchaseCancelHandler}
         purchaseContinued={purchaseContinueHandler}
       />

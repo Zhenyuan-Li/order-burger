@@ -1,23 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import './Auth.css';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import * as actions from '../../store/actions/index';
 import { updatedObject, checkValidity } from '../../shared/utility';
+import * as actions from '../../store/actions/index';
 
-const Auth = ({
-  onAuth,
-  onSetAuthRedirectPath,
-  loading,
-  error,
-  buildingBurger,
-  authRedirectPath,
-  isAuthenticated,
-}) => {
+const Auth = () => {
+  const loading = useSelector((state) => state.auth.loading);
+  const isAuthenticated = useSelector((state) => state.auth.token !== null);
+  const error = useSelector((state) => state.auth.error);
+  const authRedirectPath = useSelector((state) => state.auth.authRedirectPath);
+  const buildingBurger = useSelector((state) => state.burgerBuilder.building);
+
+  const dispatch = useDispatch();
+  const onAuth = (email, password, isSignup) =>
+    dispatch(actions.auth(email, password, isSignup));
+  const onSetAuthRedirectPath = useCallback(
+    () => dispatch(actions.setAuthRedirectPath('/')),
+    [dispatch]
+  );
+
   const [authForm, setAuthForm] = useState({
     email: {
       elementType: 'input',
@@ -131,22 +137,4 @@ const Auth = ({
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    loading: state.auth.loading,
-    error: state.auth.error,
-    isAuthenticated: state.auth.token !== null,
-    buildingBurger: state.burgerBuilder.building,
-    authRedirectPath: state.auth.authRedirectPath,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onAuth: (email, password, isSignup) =>
-      dispatch(actions.auth(email, password, isSignup)),
-    onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/')),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default Auth;

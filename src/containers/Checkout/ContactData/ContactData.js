@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './ContactData.css';
 import Button from '../../../components/UI/Button/Button';
@@ -10,14 +10,17 @@ import withErrorHandler from '../../../hoc/WithErrorHandler/withErrorHandler';
 import * as orderActions from '../../../store/actions/index';
 import { updatedObject, checkValidity } from '../../../shared/utility';
 
-const ContactData = ({
-  ings,
-  price,
-  userId,
-  token,
-  loading,
-  onOrderBurger,
-}) => {
+const ContactData = () => {
+  const ingredients = useSelector((state) => state.burgerBuilder.ingredients);
+  const price = useSelector((state) => state.burgerBuilder.totalPrice);
+  const token = useSelector((state) => state.auth.token);
+  const userId = useSelector((state) => state.auth.userId);
+  const loading = useSelector((state) => state.order.loading);
+
+  const dispatch = useDispatch();
+  const onOrderBurger = (orderData, token) =>
+    dispatch(orderActions.purchaseBurger(orderData, token));
+
   const [orderForm, setOrderForm] = useState({
     name: {
       elementType: 'input',
@@ -109,7 +112,7 @@ const ContactData = ({
       formData[formElementIdentifier] = orderForm[formElementIdentifier].value;
     }
     const order = {
-      ingredients: ings,
+      ingredients: ingredients,
       price: price,
       orderData: formData,
       userId: userId,
@@ -177,24 +180,4 @@ const ContactData = ({
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    ings: state.burgerBuilder.ingredients,
-    price: state.burgerBuilder.totalPrice,
-    loading: state.order.loading,
-    token: state.auth.token,
-    userId: state.auth.userId,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onOrderBurger: (orderData, token) =>
-      dispatch(orderActions.purchaseBurger(orderData, token)),
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withErrorHandler(ContactData, axios));
+export default withErrorHandler(ContactData, axios);

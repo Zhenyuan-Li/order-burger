@@ -1,11 +1,13 @@
 import React, { useState, Fragment } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import './Layout.css';
 import Toolbar from '../../components/Navigation/Toolbar.js/Toolbar';
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 
-const Layout = ({ isAuthenticated, children }) => {
+const Layout = ({ children }) => {
+  const isAuthenticated = useSelector((state) => state.auth.token != null);
+
   const [sideDrawerIsVisible, setSideDrawerIsVisible] = useState(false);
 
   const sideDrawerClosedHandler = () => {
@@ -32,10 +34,4 @@ const Layout = ({ isAuthenticated, children }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isAuthenticated: state.auth.token != null,
-  };
-};
-
-export default connect(mapStateToProps)(Layout);
+export default Layout;
